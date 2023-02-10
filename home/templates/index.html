@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block title %} Rent Cars {% endblock %}
+{% block css %}
+{% endblock %}
+{% block body %}
+<div class="container mt-4">
+    <div>
+      <h1 class="display-4">Car Rental System</h1>
+      <p class="lead">You can select from the wide range of Cars availabe.</p>
+      <hr class="my-4">
+    </div>
+    <div class="row mt-4">
+      <form class="w3-container" action="/search_results/" method="post">
+        {% csrf_token %}
+        <div class="container p-3 my-3 bg-dark text-white">
+
+        <lable><i style="font-weight: bold; font-size: large;">Rent a car in your city</i></lable> 
+        <input type="text" class="form-control mt-3" name="city"><br>
+        <button class="btn btn-primary" type="submit">Search Cars</button>
+      </form>
+      </div>
+{% for car in cars %}
+      <div class="col-sm-4 mt-90">
+        <div class="card" style="width: 20rem; height: 24rem;">
+          <img class="card-img-top" src="/media/{{car.image}}" alt="Card image cap" height="260px">
+          <div class="card-body">
+            <h5 class="card-title">Car Model: {{car.model}}</h5>
+            <h5 class="card-title">Car Number: {{car.number}}</h5>
+            <h6 class="card-text">Car Dealer: <b>{{car.car_agency}}</b></h6>
+            <p class="card-text">Rent: ₹{{car.rent}} per day</p>
+            {% if car.is_available %}
+            {% if request.user.is_authenticated %}
+              {% if request.user.is_customer %}
+              <form action = "/car_rent/" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="id" value="{{car.id}}">
+                <input class="btn btn-primary" type="submit" value="Rent">
+                </form></td>
+              {% elif request.user.is_car_agency %}
+              <a href="#" class="btn btn-secondary">Not allowed </a>
+              {% else %}
+              {% endif %}
+            {% else %}
+            <a href="/customer_login/" class="btn btn-primary">Rent </a>
+            {% endif %}
+            {% else %}
+            <a href="#" class="btn btn-danger">Booked </a>
+            {% endif %}
+            
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}
+

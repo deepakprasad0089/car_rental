@@ -1,0 +1,19 @@
+{% extends 'customer_navbar.html' %}
+{% block title %} Customer Login {% endblock %}
+{% block css %}
+{% endblock %}
+{% block body %}
+<div class="container p-3 my-3 border">
+      <h3><b>Booking Completed</b></h3>
+      <b>Your Order Has Been Processed!</b><br><br>
+      <b>Total Rent :</b> ₹ {{booking.rent}}<br><br>
+      <b>Vehicle Model :</b> {{booking.car.model}}<br><br>
+      <b>Vehicle Number :</b> {{booking.car.number}}<br><br>
+      <b>Duration :</b> {{booking.days}} days<br><br>
+      <b>Start Date :</b> {{booking.date}}<br><br>
+      <b>Car-Agency :</b> {{booking.car_agency.car_agency.first_name}} {{booking.car_agency.car_agency.last_name}}<br><br>
+      <b>Car-Agency's Contact:</b> {{booking.car_agency.phone}}<br><br>
+      </div>
+      </div>
+</div>
+{% endblock %}
